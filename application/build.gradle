@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.squareup.sqldelight'
+apply plugin: 'io.fabric'
+apply from: '../fabric.gradle'
+apply from: '../variants.gradle'
+
+repositories {
+	maven { url 'https://maven.fabric.io/public' }
+}
+
+android {
+	compileSdkVersion 25
+	buildToolsVersion "25.0.2"
+
+	defaultConfig {
+		applicationId "de.codekenner.practiceschedule.android"
+		minSdkVersion 24
+		targetSdkVersion 25
+		versionCode 2
+		versionName "1.0"
+		multiDexEnabled true
+
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+		compileOptions {
+			sourceCompatibility JavaVersion.VERSION_1_8
+			targetCompatibility JavaVersion.VERSION_1_8
+		}
+	}
+
+	packagingOptions {
+		exclude 'META-INF/rxjava.properties'
+	}
+	sourceSets {
+		main.java.srcDirs += 'src/main/kotlin'
+		main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
+	}
+}
+
+dependencies {
+	compile libraries.flowUp
+	testCompile libraries.flowUpNoOp
+	compile libraries.stetho //TODO remove stetho in debug builds
+
+	compile libraries.dagger
+	kapt libraries.daggerCompiler
+
+	compile libraries.rxJava
+	compile libraries.rxAndroid
+	compile libraries.rxJava2Interop
+
+	compile libraries.sqlBrite
+
+	compile libraries.okHttp
+	compile libraries.okHttpLoggingInterceptor
+	compile libraries.retrofit
+	compile libraries.retrofitMoshiConverter
+	compile libraries.retrofitRxJavaAdapter
+	compile libraries.threetenabp
+	compile libraries.fresco
+
+	kapt libraries.autoValue
+	kapt libraries.autoValueMoshi
+	kapt libraries.autoValueParcel
+	provided libraries.autoValue
+	provided libraries.autoValueMoshi
+	compile libraries.autoValueParcel
+
+	compile libraries.supportAnnotations
+	compile libraries.supportAppCompat
+	compile libraries.supportDesign
+	compile libraries.supportRecyclerView
+	compile libraries.supportCardView
+	compile libraries.constraintLayout
+
+	compile libraries.kotlinStdLib
+
+	compile(libraries.crashlytics) {
+		transitive = true;
+	}
+
+//	testCompile libraries.junit
+//	testCompile libraries.mockitoCore
+
+//	androidTestCompile libraries.supportTestRunner
+//	androidTestCompile libraries.supportTestRules
+}
+repositories {
+	mavenCentral()
+}

@@ -1,0 +1,11 @@
+CREATE TABLE notes_period (
+    _id INTEGER NOT NULL PRIMARY KEY,
+    _period_id INTEGER NOT NULL,
+    note TEXT NOT NULL,
+    FOREIGN KEY(_period_id) REFERENCES periods(_period_id)
+);
+
+select_for_period:
+SELECT *
+FROM notes_period
+WHERE _period_id = ?;

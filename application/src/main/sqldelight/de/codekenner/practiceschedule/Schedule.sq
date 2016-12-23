@@ -1,0 +1,13 @@
+import org.threeten.bp.ZonedDateTime;
+
+CREATE TABLE schedules (
+    _schedule_id INTEGER NOT NULL PRIMARY KEY,
+    start_time TEXT as ZonedDateTime NOT NULL,
+    duration INTEGER NOT NULL
+);
+
+select_all:
+SELECT *
+FROM schedules
+JOIN schedule_group_relation ON schedules._schedule_id = schedule_group_relation._schedule_id
+JOIN groups ON schedule_group_relation._group_id = groups._group_id;

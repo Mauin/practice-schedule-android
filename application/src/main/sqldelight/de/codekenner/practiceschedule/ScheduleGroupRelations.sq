@@ -1,0 +1,7 @@
+CREATE TABLE schedule_group_relation (
+    _schedule_id INTEGER NOT NULL,
+    _group_id INTEGER NOT NULL,
+    UNIQUE(_schedule_id, _group_id),
+    FOREIGN KEY(_schedule_id) REFERENCES schedules(_schedule_id),
+    FOREIGN KEY(_group_id) REFERENCES groups(_group_id)
+);

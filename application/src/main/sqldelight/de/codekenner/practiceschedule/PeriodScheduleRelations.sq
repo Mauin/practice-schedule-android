@@ -1,0 +1,7 @@
+CREATE TABLE period_schedule_relation (
+    _schedule_id INTEGER NOT NULL,
+    _period_id INTEGER NOT NULL,
+    unique(_schedule_id, _period_id),
+    FOREIGN KEY(_period_id) REFERENCES periods(_period_id),
+    FOREIGN KEY(_schedule_id) REFERENCES schedules(_schedule_id)
+);

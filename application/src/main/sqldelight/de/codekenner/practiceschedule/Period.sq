@@ -1,0 +1,13 @@
+CREATE TABLE periods (
+    _period_id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    start_offset INTEGER NOT NULL,
+    duration INTEGER NOT NULL
+
+);
+
+select_for_schedule:
+SELECT *
+FROM periods
+JOIN period_schedule_relation ON periods._period_id = period_schedule_relation._period_id
+WHERE _schedule_id = ?;

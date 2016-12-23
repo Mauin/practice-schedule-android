@@ -1,0 +1,54 @@
+import java.text.SimpleDateFormat
+
+android {
+	signingConfigs {
+		debug {
+			storeFile file('../debug.keystore')
+			storePassword 'android'
+			keyAlias 'androiddebugkey'
+			keyPassword 'android'
+		}
+
+		release {
+			storeFile file('../release.keystore')
+			storePassword practice_schedule_keystore_pw
+			keyAlias practice_schedule_keyalias
+			keyPassword practice_schedule_key_pw
+		}
+	}
+
+	buildTypes {
+		debug {
+			ext.alwaysUpdateBuildId = false
+			signingConfig signingConfigs.debug
+		}
+
+		release {
+			signingConfig signingConfigs.release
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+
+		alpha.initWith(buildTypes.release)
+		alpha {
+			applicationIdSuffix '.alpha'
+			versionNameSuffix '-alpha'
+		}
+		beta.initWith(buildTypes.release)
+		beta {
+			applicationIdSuffix '.beta'
+			versionNameSuffix '-beta'
+		}
+	}
+
+	applicationVariants.all { variant ->
+		if (variant.buildType.name == 'release') {
+			variant.mergedFlavor.versionName = buildTime();
+		}
+	}
+}
+
+def buildTime() {
+	def df = new SimpleDateFormat("dd/MM/yyyy HH:mm")
+	return df.format(new Date())
+}

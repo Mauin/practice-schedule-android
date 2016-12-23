@@ -1,0 +1,10 @@
+CREATE TABLE notes_schedule (
+    _schedule_id INTEGER NOT NULL PRIMARY KEY,
+    note TEXT NOT NULL,
+    FOREIGN KEY(_schedule_id) REFERENCES schedules(_schedule_id)
+);
+
+select_for_schedule:
+SELECT *
+FROM notes_schedule
+WHERE _schedule_id = ?;
